@@ -1,0 +1,104 @@
+\documentclass[11pt]{article}
+%Gummi|065|=)
+\title{\textbf{Math 480 - Course Project}
+			  \\Modeling and Optimizing
+			  \\Computer Science \& Engineering Admissions}
+\author{Davis Zvejnieks\\
+		Justin Zecak\\
+		Derek H}
+\date{}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{amsmath}
+
+\begin{document}
+
+\maketitle
+
+\section{Team}
+The project is comprised of students from Prof. Billey's Math 480 Spring Quarter class. The members of this team are:
+
+\begin{itemize}[noitemsep,leftmargin=1in]
+\item Derek
+\item Justin Zecak
+\item Davis Zvejnieks
+\end{itemize}
+
+
+
+\section{Project Title}
+\begin{center}
+	\emph{Modeling and Optimizing Computer Science \& Engineering Admissions}
+\end{center}
+
+
+\section{Description}
+The University of Washington's Computer Science \& Engineering (CSE) Department undergraduate program is competitive. Admission to the program is determined by committee after prerequisite classes are taken. The CSE department has information regarding past applicants. This information includes:\\
+\begin{itemize}[noitemsep, leftmargin=1in]
+\item University of Washington GPA
+\item Highest grades from each prerequisite class:
+	\begin{itemize}
+	\item CS 141
+	\item CS 142
+	\item MATH 124
+	\item English Composition
+	\end{itemize}
+\item Number of repeated prerequesite classes
+\item SAT scores
+\item Presence of survey from CS 141
+\item Admission to CSE program
+\end{itemize}
+ We are tasked with creating a predictive model to match the decision of the admissions committee given select information from applicants. Once the predictive model has been formulated, we will examine techniques used to organize applicants and optimize decisions by the committee.
+
+\section{Impact}
+
+The University of Washington's CSE program is ranked in the top ten in the nation.\footnote{\url{https://www.cs.washington.edu/prospective_students/undergrad}} Currently there are roughly 750 undergraduate students\footnote{\url{https://www.cs.washington.edu/about_us}} undergraduate students in the CSE program and less than 30\% are admitted to the program\footnote{\url{https://www.cs.washington.edu/prospective_students/undergrad/admissions}}. The prestigious standing of the program with the large number of applicants warrants examination of this process.
+\\
+\indent The process admissions is not unique to the CSE program nor University of Washington. Solutions and methods to optimize this process should be universal and could be applied to general admissions to universities, graduate programs, or other competitive programs.
+\\
+\indent Our team has contacted Principal Lecturer of CSE, Stuart Reges, who is advising the project and relaying information from the admission committee. We have also consulted with Prof. Billey is a member of the Steering Committee of ACMS, which is responsible for admissions.
+
+\section{Methods}
+
+We plan to use a multipart approach for modeling and optimizing admissions. 
+\\
+\textbf {Model}
+\\
+The first step would be creating a predictive model. This step still utilizes optimization, but will result in a function for predictive modeling. The predictive model would be a linear programming problem which minimizes the deviation of the predictive model's decision of admission from actual admission. This would provide different weights for each category provided. This could then be used to determine the importance of each category, and would allow for experimentation to see the results of aggregating certain categories and ignoring certain categories.
+\\\\
+\textbf {Optimization of admission process}
+\\
+This step would involve different approaches to organize students in order to make the decision by the committee more efficient. This could be approached as a chunking problem, where students are arranged into chunks of like students. The student with the median deviation from other students, could then be used as a representative for that group. Then each group could be treated with special conditions and rules.
+\\ \indent Another approach could be translating the problem into a travelling salesman problem (TSP). Each student represents a node, with weighted edges determined by the deviation from dominant factor of the model process (e.g. UW GPA).
+
+\section{Example}
+
+This example demonstrates how the modeling process determines the weight of each category. This is presented as a mixed integer programming problem and is a rough draft.
+\\\\
+\textbf{Variables}\\
+Let: \[y_i = 1 \text{ if student predicted to be admitted, } 0 \text{ otherwise}\]
+\[z_i =  \text{ deviation from actual acceptance }\]
+\[x_1 = \text{weight of UW GPA}\]
+\[x_2 = \text{weight of CS 141 GPA}\]
+\[x_3 = \text{weight of CS 142 GPA}\]
+\[x_4 = \text{weight of MATH 124 GPA}\]
+\[x_5 = \text{weight of SAT scores}\]
+\[s_{ij} = \text{student i's respective scores for } j = 1,2,3,4,5\]
+\[s_6 = \text{student's actual acceptance}\]
+\textbf{Objective Function}
+\[ \text{Min\(\sum\limits_{i=1}^n\) }z_i\]
+\\
+\textbf{Constraints}\\
+Set the prediction of admission or not based on weights, C is an arbitrary constant
+\[Cy_i \geq x_1s_1 + x_2s_2 + x_3s_3 + x_4s_4 + x_5s_5   \forall i\]
+Set deviation if prediction is wrong
+\[z_i \geq y_i - s_{i,6} \forall i\]
+
+
+\section{References}
+The following study may prove useful in the results phase of the project. Certain scores may not be useful in predicting an applicant's potential.\\\\
+\emph{Physics GRE Scores of Prize Postdoctoral Fellows in Astronomy}\\ by Emily M. Levesque, Rachel Bezanson, \& Grant R. Tremblay \footnote{\url{http://arxiv.org/abs/1512.03709}}
+
+
+
+\end{document}
