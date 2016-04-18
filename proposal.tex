@@ -16,7 +16,7 @@
 \maketitle
 
 \section{Team}
-The project is comprised of students from Prof. Billey's Math 480 Spring Quarter class. The members of this team are:
+The project is comprised of students from Prof. Billey's Math 480 Spring Quarter 2016 class. The members of this team are:
 
 \begin{itemize}[noitemsep,leftmargin=1in]
 \item Derek
@@ -38,17 +38,20 @@ The University of Washington's Computer Science \& Engineering (CSE) Department 
 \item University of Washington GPA
 \item Highest grades from each prerequisite class:
 	\begin{itemize}
-	\item CS 141
 	\item CS 142
+	\item CS 143
 	\item MATH 124
-	\item English Composition
+	\item MATH 125
+	\item MATH 126
+	\item Approved Science Course
+	\item English Composition Course
 	\end{itemize}
 \item Number of repeated prerequesite classes
 \item SAT scores
-\item Presence of survey from CS 141
+\item Presence of survey from CS 142-143 Series
 \item Admission to CSE program
 \end{itemize}
- We are tasked with creating a predictive model to match the decision of the admissions committee given select information from applicants. Once the predictive model has been formulated, we will examine techniques used to organize applicants and optimize decisions by the committee.
+ We are tasked with creating a predictive model to match the decision of the admissions committee given select information from applicants. Once the predictive model has been formulated, we will examine techniques that could be used to organize applicants and optimize decisions by the committee.
 
 \section{Impact}
 
@@ -56,7 +59,7 @@ The University of Washington's CSE program is ranked in the top ten in the natio
 \\
 \indent The process of admissions is not unique to the CSE program nor University of Washington. Solutions and methods to optimize this process should be universal and could be applied to general admissions to universities, graduate programs, or other competitive programs.
 \\
-\indent Our team has contacted Principal Lecturer of CSE, Stuart Reges, who is advising the project and relaying information from the admission committee. We have also consulted with Prof. Billey is a member of the Steering Committee of ACMS, which is responsible for admissions.
+\indent Our team has contacted Principal Lecturer of CSE, Stuart Reges, who is advising the project and relaying information from the admission committee. We have also consulted with Prof. Billey. She is a member of the Steering Committee of ACMS, which is responsible for admissions.
 
 \section{Methods}
 
@@ -79,20 +82,25 @@ This example demonstrates how the modeling process determines the weight of each
 Let: \[y_i = 1 \text{ if student predicted to be admitted, } 0 \text{ otherwise}\]
 \[z_i =  \text{ deviation from actual acceptance }\]
 \[x_1 = \text{weight of UW GPA}\]
-\[x_2 = \text{weight of CS 141 GPA}\]
-\[x_3 = \text{weight of CS 142 GPA}\]
+\[x_2 = \text{weight of CS 142 GPA}\]
+\[x_3 = \text{weight of CS 143 GPA}\]
 \[x_4 = \text{weight of MATH 124 GPA}\]
-\[x_5 = \text{weight of SAT scores}\]
-\[s_{ij} = \text{student i's respective scores for } j = 1,2,3,4,5\]
-\[s_6 = \text{student's actual acceptance}\]
+\[x_5 = \text{weight of MATH 125 GPA}\]
+\[x_6 = \text{weight of MATH 126 GPA}\]
+\[x_7 = \text{weight of Science Course GPA}\]
+\[x_8 = \text{weight of English Course GPA}\]
+\[x_9 = \text{weight of SAT scores}\]
+\[x_{10} = \text{weight of CSE survey presence}\]
+\[s_{ij} = \text{student i's respective scores for } j = 1,2,...,10\]
+\[s_{11} = \text{student's actual acceptance}\]
 \textbf{Objective Function}
 \[ \text{Min\(\sum\limits_{i=1}^n\) }z_i\]
 \\
 \textbf{Constraints}\\
-Set the prediction of admission or not based on weights, C is an arbitrary constant
-\[Cy_i \geq x_1s_1 + x_2s_2 + x_3s_3 + x_4s_4 + x_5s_5   \forall i\]
+Set the prediction of admission or not based on weights, C is an arbitrarily large constant
+\[Cy_i \geq x_1s_1 + x_2s_2 + x_3s_3 + x_4s_4 + x_5s_5 + x_6s_6 + x_7+s_7 + x_8s_8 + x_9s_9 + x_{10}s_{10}   \text{   }\forall i\]
 Set deviation if prediction is wrong
-\[z_i \geq y_i - s_{i,6} \forall i\]
+\[z_i \geq y_i - s_{i,11} \text{  }\forall i\]
 
 
 \section{References}
