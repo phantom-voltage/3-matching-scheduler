@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+
+%Gummi|065|=)
+\usepackage[utf8x]{inputenc}
+\title{\textbf{Chaos Week}}
+\author{Dāvis Zvejnieks}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Intro}
+
+A math camp for high school students is run by Jonah Ostroff. It is a six week program. Between the the first three weeks, and the last two weeks is "chaos week." In 2015, there were around 30 available topics, which students would vote for the most interesting classes. These classes were narrowed down to 10 classes, which the three instructors could teach, and so that teaching a class was evenly distributed. Here both the popularity vote and an even distribution among the three staff members were taken into account. The number one constraint is that each class could be taught by an appropriate instructor.\\
+\indent The Saturday before "chaos week," students would rate each of the 10 classes from 0 to 3, 0 representing no interest, 3 representing the most interest. Students may not give more than 4 classes the same rating. Students will be assigned 5 classes to take each day for the entirety of the week. On Sunday the schedule is created. There are two classes per time period. On Monday the classes would start.\\
+\indent Classes are assigned to students to maximize their preferences, and so that the class sizes remain small. There was a maximum of 7-8 students per class. The problem with creating a schedule is assigning each class one of the 5 time schedules, so that no student and no instructor would be scheduled to two classes at the same time.\\
+\indent Often there are overrides by the instructors. These are decisions which are arbitrary to the voting and ranking. Instructors may decide that a student who doesn't interact with the class should be in the proof writing class, for example.\\
+\indent In 2015, a matching was found between two classes to share a time slot. This is shown in the data from Jonah Ostroff.\\
+\indent In 2016, there will be around 24 students with 4-5 instructors for "chaos week." There will be 15 available classes, once narrowed down, and there will be three classes per time slot.
+\section{Constraints}
+Constraints for 2016. 
+\begin{itemize}
+	\item Hard
+	\begin{itemize}
+		\item No student is scheduled for two classes at the same time period.
+		\item No instructor is schedule for two classes at the same time period.
+	\end{itemize}
+	\item Soft
+	\begin{itemize}
+	\item Maximize preference of each student. Look at average rating of classes, and compare to the preference of classes they are actually assigned.
+	\item Each instructor teaches no more than 2 classes.
+	\item Each instructor has a class with every student.
+	\end{itemize}
+\end{itemize}
+
+
+\section{Methods}
+If we are to follow the same approach as Jonah Ostroff, we would have to look for a 3-matching in a hyper-graph.\\
+\indent The most important constraint is that each instructor is assigned a class they are comfortable teaching. Given overrides by instructors, student preferences are the last thing to consider.\\
+\indent We may look for a different approach, rather than look for a matching. Then compare this with the preference scores of the 2015 data set and get an idea of how much we marginalize student preference.\\
+\indent We also may want to look at assigning the various 10 or 15 classes into groups, and then make sure that none of the classes in the same group are at the same time period.
+
+\end{document}
