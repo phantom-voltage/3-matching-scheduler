@@ -1,0 +1,229 @@
+\documentclass[11pt]{article}
+%Gummi|065|=)
+\title{\textbf{Math 480 - Course Project}
+			  \\Creating a schedule for "Chaos Week"}
+\author{Derek Rhodeham\\
+		Justin Zecak\\
+		Davis Zvejnieks}
+\date{}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage[table]{xcolor}
+\usepackage{xcolor,colortbl}
+
+
+
+
+\newcommand{\mc}[2]{\multicolumn{#1}{c}{#2}}
+\definecolor{Gray}{gray}{0.85}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\definecolor{Green}{rgb}{0,1,.4}
+\definecolor{Blue}{rgb}{.5,.7,1}
+\definecolor{Orange}{rgb}{1,0.5,0}
+\definecolor{Maroon}{rgb}{.8,.3,.5}
+\definecolor{Whatever}{rgb}{.9,1,.7}
+
+\newcolumntype{a}{>{\columncolor{Gray}}l}
+\newcolumntype{b}{>{\columncolor{Blue}}l}
+\newcolumntype{g}{>{\columncolor{Green}}l}
+\newcolumntype{o}{>{\columncolor{Orange}}l}
+\newcolumntype{m}{>{\columncolor{Maroon}}l}
+\newcolumntype{z}{>{\columncolor{Whatever}}l}
+
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Teacher Assignments}
+Table \ref{table:elig} on page \pageref{table:elig} refers to the data generated for the sample data in 2016. For a total of five teachers, each had an eligibility score to teach the classes. It was assumed that there was an even distribution of classes each teacher could instruct. Note that when a cell is colored green it corresponds to that teacher being scheduled to teach that class, as shown in \ref{table:teacher_assign} on page \pageref{table:teacher_assign}, red refers to classes a teacher could teach, but was not scheduled for. It's important to note, that no teacher was assigned a class he or she could not teach, i.e., no cell with the entry of 0 is colored green. This satisfies the hard constraint of each class being instructed by an eligible teacher.
+        	
+\begin{table}
+\begin{tabular}{|a||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
+\rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
+$7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$
+& $14$ & $15$ \\ \hline \hline
+Teacher a & $0$ & \cellcolor{red!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ \\ \hline
+Teacher b & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{red!45}$1$ & $0$ & $0$ & $0$ & $0$
+& $0$ & $0$ \\ \hline
+Teacher c & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & \cellcolor{red!45}$1$ & $0$
+& $0$ & $0$ \\ \hline
+Teacher d & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$
+& $0$ & $0$ \\ \hline
+Teacher e & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ \\ \hline
+\end{tabular}
+\caption{Teacher eligibility to teach a given class. Entry is 1 if the teacher in the row can teach the class in the column}
+\label{table:elig}
+\end{table}
+\begin{table}
+\begin{tabular}{|a||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
+\rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
+$7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$ &
+$14$ & $15$ \\ \hline \hline
+Teacher a & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ \\ \hline
+Teacher b & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$ & $0$
+& $0$ & $0$ \\ \hline
+Teacher c & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$
+& $0$ & $0$ \\ \hline
+Teacher d & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$
+& $0$ & $0$ \\ \hline
+Teacher e & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ \\ \hline
+\end{tabular}
+\caption{Teacher assignment for the 15 classes. The entry is 1 if a teacher is scheduled to teach the class in the column.}
+\label{table:teacher_assign}
+\end{table}
+\begin{tabular}{|a||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
+\rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
+$7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$
+& $14$ & $15$ \\ \hline \hline
+Student A & \cellcolor{green!45}\cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$
+& $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & $0$ \\ \hline
+Student B & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & $0$ \\ \hline
+Student C & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & $0$ \\ \hline
+Student D & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ \\ \hline
+Student E & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & \cellcolor{green!45}$1$ \\ \hline
+Student F & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ \\ \hline
+Student G & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& $0$ & $0$ \\ \hline
+Student H & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ \\ \hline
+Student I & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$
+& $0$ & $0$ \\ \hline
+Student J & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& \cellcolor{green!45}$1$ & $0$ \\ \hline
+Student K & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & $0$ \\ \hline
+Student L & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$
+& $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & $0$ \\ \hline
+Student M & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & \cellcolor{green!45}$1$ \\ \hline
+Student N & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$
+& \cellcolor{green!45}$1$ & $0$ \\ \hline
+Student O & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ \\ \hline
+Student P & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$
+& $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$
+& $0$ & $0$ \\ \hline
+Student Q & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & $0$ \\ \hline
+Student R & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& \cellcolor{green!45}$1$ & $0$ \\ \hline
+Student S & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & $0$ \\ \hline
+Student T & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ \\ \hline
+Student U & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & $0$ & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$
+& $0$ & $0$ \\ \hline
+Student V & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & \cellcolor{green!45}$1$ \\ \hline
+Student W & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & $0$ & $0$
+& \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ \\ \hline
+Student X & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$
+& $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+& $0$ & \cellcolor{green!45}$1$ \\ \hline
+\end{tabular}\\\\
+
+
+
+         	
+
+\begin{tabular}{|a||m|z|b|m|g|o|o|z|m|b|z|g|b|o|g|} \hline
+\rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
+$7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$
+& $14$ & $15$ \\ \hline \hline
+TimeSlot & $4$ & $5$ & $2$ & $4$ & $1$ & $3$
+& $3$ & $5$ & $4$ & $2$ & $5$ & $1$ & $2$
+& $3$ & $1$ \\ \hline
+Teacher & d & c & c & a & e & d & b & b
+& c & e & a & d & d & e & a \\ \hline
+Student & A & G & A & F & A & A & B & D
+& D & G & A & B & C & F & D \\ \hline
+Student & B & H & B & H & C & D & C & F
+& E & J & B & I & E & H & E \\ \hline
+Student & C & J & D & I & F & L & E & N
+& L & Q & C & J & I & J & M \\ \hline
+Student & G & L & F & J & G & P & G & O
+& N & R & E & N & L & N & O \\ \hline
+Student & K & M & H & R & H & Q & I & P
+& O & S & I & Q & M & O & T \\ \hline
+Student & M & R & K & U & K & S & K & T
+& P & T & K & R & N & R & V \\ \hline
+Student & Q & S & P & V & L & V & M & V
+& T & U & Q & S & O & T & W \\ \hline
+Student & S & X & X & X & P & X & U & W
+& W & W & U & U & V & W & X \\ \hline
+\end{tabular}
+
+\begin{tabular}{|a||g|g|g|b|b|b|o|o|o|m|m|m|z|z|z|} \hline
+TimeSlot & $1$ & $1$ & $1$ & $2$ & $2$ & $2$
+& $3$ & $3$ & $3$ & $4$ & $4$ & $4$ & $5$
+& $5$ & $5$ \\ \hline \hline
+Class & $5$ & $12$ & $15$ & $3$ & $10$ & $13$
+& $6$ & $7$ & $14$ & $1$ & $4$ & $9$ & $2$
+& $8$ & $11$ \\ \hline
+Teacher & e & d & a & c & e & d & d & b
+& e & d & a & c & c & b & a \\ \hline
+Student & A & B & D & A & G & C & A & B
+& F & A & F & D & G & D & A \\ \hline
+Student & C & I & E & B & J & E & D & C
+& H & B & H & E & H & F & B \\ \hline
+Student & F & J & M & D & Q & I & L & E
+& J & C & I & L & J & N & C \\ \hline
+Student & G & N & O & F & R & L & P & G
+& N & G & J & N & L & O & E \\ \hline
+Student & H & Q & T & H & S & M & Q & I
+& O & K & R & O & M & P & I \\ \hline
+Student & K & R & V & K & T & N & S & K
+& R & M & U & P & R & T & K \\ \hline
+Student & L & S & W & P & U & O & V & M
+& T & Q & V & T & S & V & Q \\ \hline
+Student & P & U & X & X & W & V & X & U
+& W & S & X & W & X & W & U \\ \hline
+\end{tabular}
+
+
+\end{document}
