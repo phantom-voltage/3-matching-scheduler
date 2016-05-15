@@ -2,7 +2,7 @@
 %Gummi|065|=)
 \title{\textbf{Math 480 - Course Project}
 			  \\Creating a schedule for "Chaos Week"}
-\author{Derek Rhodeham\\
+\author{Derek Rhodehamel\\
 		Justin Zecak\\
 		Davis Zvejnieks}
 \date{}
@@ -36,6 +36,21 @@
 
 \maketitle
 
+\section{Problem description}
+MathILy-Er is a summer math camp for high school students.  In the middle of the camp there is a special week called the Week of Chaos.  During the Week of Chaos some fixed number (usually 10-15) of week-long classes are taught during some number of time slots (usually around 5). Each camper is scheduled for a class during each of the time slots, and each of the teachers at the camp is scheduled to teach no more than 4 of these classes.  Before the week of chaos, students are asked to fill out a survey where they rate their levels of interest in the various classes on a scale of 0-3. Teachers are asked which classes they are qualified to teach and which classes they would most like to teach. Then the camp administrators have to create a Chaos Week schedule based on student and teacher preferences. Our goal for this project is to create a schedule based on an artificial set of student and teacher preferences which maximizes that satisfaction of student preferences, such that students are never scheduled for the multiple classes during a given time slot, every student is assigned to a class during each time slot, and the teaching load is evenly distributed between the teachers.
+
+\section{Our approach}
+At root the problem is to find an optimal 3-matching. Unfortunately, this sort of problem is proven to be NP-complete, so a polynomial time algorithm is not known at this time. Thus we chose to formulate the problem as a linear program, since this method is both flexible and relatively scalable. Our objective function is the sum of student ratings for their assigned classes plus the sum of teacher ratings for the classes they are assigned to teach. We seek to maximize this function subject to the follow sets of constraints:
+
+	Time conflicts.  Each day there is a fixed number of time slots during which classes can be scheduled. In our artificial data set we set this number of time slots to 5. Clearly we cannot schedule teachers to teach multiple classes during a single timeslot or schedule students to take multiple classes during a single slot. We formulated these constraints in the obvious way: the sum of classes assigned to each teacher during each timeslot must be less than or equal to 1, and for students this sum must be equal to one, since the students must take exactly one class during every time slot.
+	Teacher eligibility. The camp instructors provide information on which classes they are qualified to teach in addition to which classes they prefer to teach. It is a hard constraint that a teacher is never scheduled to teach a class that they are not qualified to teach. Thus for each class we add constraints stating that unqualified teachers cannot teach that class.
+	Overrides. An interesting feature of our problem is that, even though the goal is to make a schedule that maximizes student preferences, instructors will frequently override student preferences. This is because students usually do not have a clear idea of what goes on in the various classes at the time when they take the survey. If the instructors feel that a student underrated a class that fits well with her general interests, or ought to be in a class because it addresses a hole in her skillset, they will simply place the student in the relevant class regardless of their preferences. In our model, overrides like these will be added to the initial constraints.
+
+	In the end this amounts to a very large number of constraints, and it still takes quite a while to find the optimal solution (for 24 students and 15 classes, it took ___). Thankfully, given the nature of our problem it is not actually necessary to find the optimal solution, since the preference function we take as our objective function is really just a sort of proxy for subjective and approximate measures of student and teacher preference. Therefore our model allows users to vary how long they want to let the linear program solver run, rather than waiting for the solver to run to completion. In a matter of minutes the user can compute a solution which is very good albeit mathematically suboptimal, but which will be optimal or close to optimal from the practical standpoint of students and schedulers. To substantiate this claim we ran our model for just 3 minutes using the preference data from 2015, and arrived at a schedule which was nearly identical to the actual schedule chosen by the MathILy-Er instructors.
+	It should be noted that if the user does want to compute the mathematically optimal schedule, this can be done in a matter of hours for small to medium groups of students.  That is enough time to be inconvenient, but still beats a weekend spent tinkering with hypergraphs (well, that depends on one’s disposition).
+
+\section{Simplification}
+While this problem does not require a significant number of simplifications, some assumptions must be made about the data in order to satisfy our solutions. One simplification is that we must assume is that the preferences of teachers is evenly distributed over the total collection of classes to be taught.
 
 \section{Results}
 \subsection{Teacher Assignments by Eligibility}
@@ -235,5 +250,22 @@ Student & P & U & X & X & W & V & X & U
 & W & S & X & W & X & W & U \\ \hline
 \end{tabular}
 
+\section{Results}
+We were able to find a viable solution to this propblem using Linear Programming in approximately 7 minutes. Overall this is a much better time frame than the previous time frame used by our community partner which they reported as a whole weekend.
+	--ADD SOME STUFF--
+	
+\section{Improvements}
+--ADD SOME STUFF, BETTER HEURISTICS?--
+
+\section{Conclusions}
+--WHAT DID WE LEARN?--
+
+\section{Acknowledgments}
+First off we would like to thank Professor Sara Billey for being understanding when our previous two projects did not end up working out. The stumbles suffered throughout the quarter made progress difficult and uncertain, but Professor Billey was very accommodating and made sure that we kept moving forward. We would also like to thank Dr. Jonah Ostroff for providing this interesting problem for us so late in the quarter. While not as ambitious as our previous two problems, this scheduling problem seems genuinely useful while also providing value for future weeks of chaos to improve student and teacher experiences.
+
+\section{References}
+Yuk Hei Chan, a PhD candidate at the University of Maryland, wrote his masters thesis on linear programming relaxations of matching problems in On Linear Programming Relaxations of Hypergraph Matching. He discusses in his thesis the time complexity of finding k-matchings, integrality gap of various LP relaxations, and methods to improve the LP relaxations. Chan mentions a polynomial time approximation of k-matching, which could be applied for larger data sets. He also compares k-matching to other problems, such as set packing. This resource will be invaluable in searching for ways to improve schedule creation and adapt it to larger schedules.
+
+Dr. Aldy Gunawan is a Research Scientist at the Living Analytics Research Center in Singapore. He has published many papers regarding the issue of scheduling construction. Specifically he has published a paper regarding Solving the Teacher Assignment Problem by Two Metaheuristics. In this paper he explores using the process of Simulated Annealing to find an optimal schedule for full-time and part-time teachers in a class schedule. He also has another paper A Genetic Algorithm for the Teacher Assignment Problem for a University in Indonesia which solves a similar problem but solves it using a genetic algorithm. Finally he has a third published paper, Solving the Teacher Assignment-Course Scheduling Problem by a Hybrid Algorithm in which he confronts another scheduling problem among teachers, classes, and students optimizes a solution based on Integer Programming. These papers provide a good basis since the problems addressed are similar to the problem of our community partner. However, they are not exact solutions so we will have to formulate our own LP.
 
 \end{document}
