@@ -11,7 +11,7 @@
 \usepackage{amsmath}
 \usepackage[table]{xcolor}
 \usepackage{xcolor,colortbl}
-
+\usepackage[section]{placeins}
 
 
 
@@ -37,11 +37,11 @@
 \maketitle
 
 
+\section{Results}
+\subsection{Teacher Assignments by Eligibility}
+Table \ref{table:elig} on page \pageref{table:elig} refers to the data generated for the sample data in 2016. For a total of five teachers, each had an eligibility score to teach the classes. It was assumed that there was an even distribution of classes each teacher could instruct. Note that when a cell is colored green it corresponds to that teacher being scheduled to teach that class, as shown in \ref{table:teacher_assign} on page \pageref{table:teacher_assign}, red refers to classes a teacher could teach, but was not scheduled for. It's important to note, that no teacher was assigned a class he or she could not teach, i.e., no cell with the entry of 0 is colored green. This satisfies the hard constraint of each class being instructed by an eligible teacher. 
 
-\section{Teacher Assignments}
-Table \ref{table:elig} on page \pageref{table:elig} refers to the data generated for the sample data in 2016. For a total of five teachers, each had an eligibility score to teach the classes. It was assumed that there was an even distribution of classes each teacher could instruct. Note that when a cell is colored green it corresponds to that teacher being scheduled to teach that class, as shown in \ref{table:teacher_assign} on page \pageref{table:teacher_assign}, red refers to classes a teacher could teach, but was not scheduled for. It's important to note, that no teacher was assigned a class he or she could not teach, i.e., no cell with the entry of 0 is colored green. This satisfies the hard constraint of each class being instructed by an eligible teacher.
-        	
-\begin{table}
+\begin{table}[h!]
 \begin{tabular}{|a||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
 \rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
 $7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$
@@ -65,7 +65,8 @@ Teacher e & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$
 \caption{Teacher eligibility to teach a given class. Entry is 1 if the teacher in the row can teach the class in the column}
 \label{table:elig}
 \end{table}
-\begin{table}
+
+\begin{table}[h!]
 \begin{tabular}{|a||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
 \rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
 $7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$ &
@@ -89,6 +90,12 @@ Teacher e & $0$ & $0$ & $0$ & $0$ & \cellcolor{green!45}$1$ & $0$
 \caption{Teacher assignment for the 15 classes. The entry is 1 if a teacher is scheduled to teach the class in the column.}
 \label{table:teacher_assign}
 \end{table}
+
+\FloatBarrier
+\subsection{Student Assignments}
+Student assignments to classes are shown as a \ref{table:stud_assign} on page \pageref{table:stud_assign} hahaha blah blah
+
+\begin{table}[h]
 \begin{tabular}{|a||l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
 \rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
 $7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$
@@ -165,12 +172,15 @@ Student W & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
 Student X & $0$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & \cellcolor{green!45}$1$ & $0$ & \cellcolor{green!45}$1$
 & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
 & $0$ & \cellcolor{green!45}$1$ \\ \hline
-\end{tabular}\\\\
+\end{tabular}
+\caption{Student assignments}
+\label{table:stud_assign}
+\end{table}
 
 
 
          	
-
+\section{Time Slots}
 \begin{tabular}{|a||m|z|b|m|g|o|o|z|m|b|z|g|b|o|g|} \hline
 \rowcolor{gray!50}Class & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ &
 $7$ & $8$ & $9$ & $10$ & $11$ & $12$ & $13$
