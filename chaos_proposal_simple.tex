@@ -2,7 +2,7 @@
 %Gummi|065|=)
 \title{\textbf{Math 480 - Course Project}
 			  \\Creating a schedule for "Chaos Week"}
-\author{Derek Rhodeham\\
+\author{Derek Rhodehamel\\
 		Justin Zecak\\
 		Davis Zvejnieks}
 \date{}
@@ -17,8 +17,13 @@
 \section{Description}
 Dr. Jonah Ostroff runs MathILy, a 6-week math camp for high school students. Between the the first three weeks and the last two weeks is "chaos week." During "chaos week" a new set of classes are voted on by students, and they are enrolled in a week long program containing their top five classes.\\
 \indent In 2015, there were around 30 available topics, from which students would vote for most interesting. These classes were narrowed down to 10 classes, which the three instructors could teach. Each student could then vote 0 to 3 on the remaining classes, 0 representing no interest, 3 representing most interest. Each student was then assigned five classes, which they would participate in daily for the week. Students were assigned classes not only by their most preferred class, but also by instructor overrides based on their knowledge of students. There were 5 time slots available, so 2 classes were taught at the same time.\\
-\indent Dr. Ostroff would like a schedule for 2016 so that there are no time conflicts between classes an instructor could teach while maximizing the preferences of students. This year the schedule should accommodate 24 students, 4 to 5 instructors, and 15 classes. This would mean three classes will be taught at each of the 5 time slots.
+\indent Dr. Ostroff would like a schedule for 2016 so that there are no time conflicts between classes an instructor could teach while maximizing the preferences of students. This year the schedule should accommodate 24 students, 4 to 5 instructors, and 15 classes. This would mean three classes will be taught at each of the 5 time slots. Satisfying all of these constraints would result in a "master plan" that outlines an optiized schedule for the week of chaos.
 
+\section{Goal}
+Create a "master plan" for the week of chaos class assignments by maximizing student/teacher preferences such that students and teachers are not ever assigned more than one class in the same time, each students is assigned a class at each time slot, and teachers are assigned to an evenly distributed number of students.
+
+\section{Simplification}
+While this problem does not require a significant number of simplifications, some assumptions must be made about the data in order to satisfy our solutions. Firstly, the 15 classes must be evenly distributed among all available teachers, this means that teachers are able to teach roughly an equivalent number of classes out of the 15. We must also assume 
 
 \section{Impact}
 Dr. Ostroff had used a method for creating the schedule by searching for a bipartite graph to represent classes which would share a time slot. This method does not easily scale to finding a 3-matching in a hyper-graph. More complexity arises if the schedule were to accommodate 3 or more simultaneous classes.\\
