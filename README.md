@@ -9,6 +9,9 @@
  * Chaos Week vs. Week of Chaos vs. "Chaos Week" vs. "Week of Chaos"
  * IP vs. LP
  * MathILy vs. MathILy-Er
+* Do we need to mention that we're using SAGE?
+ * GLPK is the algorithm used to solve the IP, but we're generating constraints and spitting the results back out into a readable format.
+ * Not sure how much detail to give on SAGE, if any, and where to state this.
 
 ###Notes:
 * I took the liberty of changing MathILy-Er to MathILy. I don't think we need to be that specific and I think it's more confusing in its full form.
@@ -18,3 +21,4 @@
 * If you change indentation or linespacing within github's editor
  * Use "\indent" for indentation
  * Use "\\\" at the end of a paragraph for a new line
+
