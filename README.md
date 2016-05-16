@@ -17,4 +17,4 @@
  * Do we need to reword the section that references this? Or will we add this later?
 * If you change indentation or linespacing within github's editor
  * Use "\indent" for indentation
- * Use "\\" at the end of a paragraph for a new line
+ * Use "\\\" at the end of a paragraph for a new line
