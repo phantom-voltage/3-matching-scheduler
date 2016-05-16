@@ -1,4 +1,11 @@
 ## math_480_project
 ###Project for Prof. Billey's Math 480 Spring 2016 class
+###Chaos Week Scheduling
 
-So far this just contains the proposal written in LaTeX. I've provided the sourcecode and the PDF here. Let me know about any changes or you can submit a pull request.
+###To Do:
+
+* Pass through documents for clarification and typos
+* Do we need to present objective function and constraints in mathematical terms?
+
+###Notes:
+* I took the liberty of changing MathILy-Er to MathILy. I don't think we need to be that specific and I think it's more confusing in its full form.
