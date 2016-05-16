@@ -1,11 +1,14 @@
 ## math_480_project
-###Project for Prof. Billey's Math 480 Spring 2016 class
 ###Chaos Week Scheduling
 
 ###To Do:
 
 * Pass through documents for clarification and typos
 * Do we need to present objective function and constraints in mathematical terms?
+* Are we consistent with all terms?
+ * Chaos Week vs. Week of Chaos vs. "Chaos Week" vs. "Week of Chaos"
+ * IP vs. LP
+ * MathILy vs. MathILy-Er
 
 ###Notes:
 * I took the liberty of changing MathILy-Er to MathILy. I don't think we need to be that specific and I think it's more confusing in its full form.
