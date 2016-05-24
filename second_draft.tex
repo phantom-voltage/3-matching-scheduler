@@ -43,8 +43,30 @@ MathILy is a summer math camp for high school students.  In the middle of the ca
 At root, the problem is to find an optimal 3-matching. Unfortunately, finding a 3-or-more-matching is proven to be NP-complete, so a polynomial time algorithm is not known at this time. Thus we chose to formulate the problem as a linear program (LP), since this method is both flexible and relatively scalable.\\
 \indent The end result must contain all integer values, for example, we cannot assign a student to half of a class. Thus the problem is an integer programming (IP) problem, and we'll use an LP solution as a basis for our IP problem. To approach this problem we chose to implement the GNU Linear Programming Kit (GLPK) to solve the IP, as it is free to use with no license requirements or other restrictions.\\
 \indent Because there is no data yet for student preferences of 2016, we used randomized data fitting within the constraints and estimations of Dr. Ostroff. This is done to show the feasibility of using this approach for data sets larger than the 2015 data. While our approach is built on the requirements of MathILy's chaos week, our algorithm has been generalized to accept a variable amount for the scheduling requirements. This allows this method of scheduling to extend beyond just MathILy's Week of Chaos.\\
-\indent Our objective function is the sum of student ratings for their assigned classes plus the sum of teacher ratings for the classes they are assigned to teach. We seek to maximize this function subject to the follow sets of constraints:\\
-
+\subsection{Variables}
+\indent Let $x$ represent student assignment into $n$ classes. $y$ represents instructor assignment into $n$ classes. $z$ represents time slots assignment of $n$ classes. We set up the variables to be adjustable depending on the requirements in different circumstances. 
+\[h \in \left\{ {1,2,...,l}\right\}\text{, where 
+}l \text{ is the number of instructors}\]
+\[i \in \left\{ {1,2,...,m}\right\}\text{, where 
+}m \text{ is the number of students}\]
+\[j \in \left\{{1,2,...,n}\right\} \text{where } n \text{ is the number of classes} \]
+\[t \in \left\{{1,2,...,q}\right\} \text{where } q \text{ is the number of timeslots} \]
+\[x_{ij} = 1 \text{ if student } i \text{ is assigned to class }j \text{, 0 otherwise}\]
+\[y_{hj} = 1 \text{ if instructor } h  \text{ is assigned to class }j \text{, 0 otherwise}\]
+\[z_{jt} = 1 \text{ if class} j  \text{ is assigned to timeslot }t \text{, 0 otherwise}\]\\
+We also incorporate the student preference matrix $P$ and instructor eligibility matrix $E$ in calculations as we seek to maximize their preferences and eligibility.
+\[P =(p_{ij}) \text{, where } p_{ij} \text{ represents preference rating of student } i \text{ for class }j\]
+\[E =(e_{hj}) \text{, where } e_{hj} \text{ represents eligibility rating of instructor } h \text{ for class }j\]
+\indent Our objective function is the sum of student ratings for their assigned classes plus the sum of teacher ratings for the classes they are assigned to teach.\\
+\[\text{max} \sum_{i=1}^{m} \sum_{j=1}^{n}x_{ij}p_{ij} + \sum_{h=1}^{l}\sum_{j=1}^{n}y_{ij}e_{ij}\]
+We seek to maximize this function subject to the follow sets of constraints:\\
+\subsection{Classes Taken}
+Each student must be enrolled in 5 classes during Chaos Week.
+\[\forall i \in \left\{ {1,2,...,m}\right\},\sum_{j=1}^{n}x_{ij} = 5\]
+\subsection{Class Size}
+Each class should have around 7 students at most. We broke this up into two constraints, by setting a class size minimum and maximum. We found that without setting a minimum, class distribution was uneven. Some classes had only two or three students, and this violated the needs of Dr. Ostroff.
+\[\forall j \in \left\{ {1,2,...,n}\right\},\sum_{i=1}^{m}x_{ij} \leq 8\]
+\[\forall j \in \left\{ {1,2,...,n}\right\},\sum_{i=1}^{m}x_{ij} \geq 5\]
 \subsection{Time conflicts}
 Each day there is a fixed number of time slots during which classes can be scheduled. In our artificial data set we set this number of time slots to 5. Clearly we cannot schedule teachers to teach multiple classes during a single time-slot or schedule students to take multiple classes during a single slot. We formulated these constraints in the obvious way: the sum of classes assigned to each teacher during each time-slot must be less than or equal to 1, and for students this sum must be equal to one, since the students must take exactly one class during every time slot.
 \subsection{Teacher eligibility}
