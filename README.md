@@ -21,6 +21,7 @@
  * Get a monopoly on Pokemon cards
 
 ###Notes:
+* I switched over the first draft file to second draft file, it's a WIP with some of the formulas filled in
 * I took the liberty of changing MathILy-Er to MathILy. I don't think we need to be that specific and I think it's more confusing in its full form.
 * I am unable to recreate the sub-optimal solution for 2015 that closely resembles Jonah's schedule.
  * Even with inefficient solver parameters, I am getting the better solution which diverges from Jonah's schedule.
