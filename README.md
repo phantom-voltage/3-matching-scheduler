@@ -3,7 +3,7 @@
 
 ###To Do:
 
-* Explain why certain solving methods for GLPK work better than others
+* Explain why certain solving methods for GLPK work better than others.
  * Branching Pseudo-Cost Heuristic
  * Backtracking by best prediction heuristic
  * Cuts by mixed integer rounding
