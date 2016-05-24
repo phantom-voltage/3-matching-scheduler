@@ -18,6 +18,7 @@
  * Identify what are potential problems in schedules that cause for longer solving times
  * About how long should we run it to get a better solution once a BFS is found?
  * Write a function to generate random data that would represent teacher preferences and student preferences
+ * Create a table showing computation times and preference total achieved
  * Get a monopoly on Pokemon cards
 
 ###Notes:
