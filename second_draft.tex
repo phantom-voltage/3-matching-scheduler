@@ -50,29 +50,62 @@ At root, the problem is to find an optimal 3-matching. Unfortunately, finding a 
 \[i \in \left\{ {1,2,...,m}\right\}\text{, where 
 }m \text{ is the number of students}\]
 \[j \in \left\{{1,2,...,n}\right\} \text{where } n \text{ is the number of classes} \]
-\[t \in \left\{{1,2,...,q}\right\} \text{where } q \text{ is the number of timeslots} \]
+\[t \in \left\{{1,2,...,s}\right\} \text{where } s \text{ is the number of timeslots} \]
 \[x_{ij} = 1 \text{ if student } i \text{ is assigned to class }j \text{, 0 otherwise}\]
 \[y_{hj} = 1 \text{ if instructor } h  \text{ is assigned to class }j \text{, 0 otherwise}\]
-\[z_{jt} = 1 \text{ if class} j  \text{ is assigned to timeslot }t \text{, 0 otherwise}\]\\
+\[z_{tj} = 1 \text{ if class } j  \text{ is assigned to timeslot }t \text{, 0 otherwise}\]\\
 We also incorporate the student preference matrix $P$ and instructor eligibility matrix $E$ in calculations as we seek to maximize their preferences and eligibility.
 \[P =(p_{ij}) \text{, where } p_{ij} \text{ represents preference rating of student } i \text{ for class }j\]
 \[E =(e_{hj}) \text{, where } e_{hj} \text{ represents eligibility rating of instructor } h \text{ for class }j\]
+\[F =(f_{ij}) \text{, where } f_{ij} = 1 \text{ if student} i \text{ is forced to take for class }j \text{, 0 otherwise}\]
+For the sample problem of 2016:
+\[l = 5, m = 24, n = 15, s = 5\]
 \indent Our objective function is the sum of student ratings for their assigned classes plus the sum of teacher ratings for the classes they are assigned to teach.\\
 \[\text{max} \sum_{i=1}^{m} \sum_{j=1}^{n}x_{ij}p_{ij} + \sum_{h=1}^{l}\sum_{j=1}^{n}y_{ij}e_{ij}\]
 We seek to maximize this function subject to the follow sets of constraints:\\
-\subsection{Classes Taken}
+\subsection{Classes}
+\subsubsection{Classes Taken}
 Each student must be enrolled in 5 classes during Chaos Week.
 \[\forall i \in \left\{ {1,2,...,m}\right\},\sum_{j=1}^{n}x_{ij} = 5\]
-\subsection{Class Size}
+\subsubsection{Class Size}
 Each class should have around 7 students at most. We broke this up into two constraints, by setting a class size minimum and maximum. We found that without setting a minimum, class distribution was uneven. Some classes had only two or three students, and this violated the needs of Dr. Ostroff.
 \[\forall j \in \left\{ {1,2,...,n}\right\},\sum_{i=1}^{m}x_{ij} \leq 8\]
 \[\forall j \in \left\{ {1,2,...,n}\right\},\sum_{i=1}^{m}x_{ij} \geq 5\]
-\subsection{Time conflicts}
-Each day there is a fixed number of time slots during which classes can be scheduled. In our artificial data set we set this number of time slots to 5. Clearly we cannot schedule teachers to teach multiple classes during a single time-slot or schedule students to take multiple classes during a single slot. We formulated these constraints in the obvious way: the sum of classes assigned to each teacher during each time-slot must be less than or equal to 1, and for students this sum must be equal to one, since the students must take exactly one class during every time slot.
-\subsection{Teacher eligibility}
-The camp instructors provide information on which classes they are qualified to teach in addition to which classes they prefer to teach. It is a hard constraint that a teacher is never scheduled to teach a class that they are not qualified to teach. Thus for each class we add constraints stating that unqualified teachers cannot teach that class.
+\subsubsection{Instructors per class limit}
+First, each class should only have one instructor. While the 2015 data showed that Dr. Ostroff taught a class with another instructor, we decided this would add unnecessary complexity for the algorithm. We suggest that, if another teacher is not scheduled at that time, he or she may co-teach.
+\[\forall j \in \left\{ {1,2,...,n}\right\}, \sum_{h=1}^{l}y_{hj} = 1\]
+\subsection{Instructor eligibility}
+The camp instructors provide information on which classes they are qualified to teach in addition to which classes they prefer to teach. It is a hard constraint that a teacher is never scheduled to teach a class that they are not qualified to teach. Thus for each class we add constraints stating that unqualified teachers cannot teach that class.\\
+\indent Eligibility for instructors is represented by the matrix E. This can be a matrix containing only binary numbers, or integer or real numbers. Using non-binary numbers may be useful in ranking instructors indicating possible back up instructors.
+\[\forall j \in \left\{ {1,2,...,n}\right\}, \sum_{h=1}^{l}y_{hj}e_{hj} \geq 0\]
+
 	\subsection{Overrides}
 An interesting feature of our problem is that, even though the goal is to make a schedule that maximizes student preferences, instructors will frequently override student preferences. This is because students usually do not have a clear idea of what goes on in the various classes at the time when they take the survey. If the instructors feel that a student underrated a class that fits well with her general interests, or ought to be in a class because it addresses a hole in her skill set, they will simply place the student in the relevant class regardless of their preferences. In our model, overrides like these are added to the initial constraints.\\
+\indent Overrides constraints are calculated on a per student basis, reducing the number of constraints.
+\[ \text{if } f_{ij} = 1, \text{ then } x_{ij} = 1\]
+\subsection{Time constraints}
+Each day there is a fixed number of time slots during which classes can be scheduled. In our artificial data set we set this number of time slots to 5. Clearly we cannot schedule teachers to teach multiple classes during a single time-slot or schedule students to take multiple classes during a single slot. We formulated these constraints in the obvious way: the sum of classes assigned to each teacher during each time-slot must be less than or equal to 1, and for students this sum must be equal to one, since the students must take exactly one class during every time slot.\\
+\subsubsection{Number of classes per timeslot}
+This depends on the scheduling decided ahead of time by the program's organizers. With 15 classes and 5 timeslots, we create a constraint such that only 3 classes can occupy any given timeslot.
+\[\forall t \in \left\{ {1,2,...,s}\right\}, \sum_{j=1}^{n}z_{tj} = 3\]
+\subsubsection{Each class is assigned to only one timeslot}
+Each class should only occur once in the schedule. This ensures that the algorithm does not disregard the time conflicts.
+\[\forall j \in \left\{ {1,2,...,n}\right\}, \sum_{t=1}^{s}z_{tj} = 1\]
+\subsection{Student time conflicts}
+To prevent students being assigned to classes that occur in the same timeslot, we must add a large number of constraints per student. For any given selection of three classes (there are $\binom {15}{3} = 455$) the total of the binary variables representing timeslots and student enrollment must be less than 1 plus the number of simultaneous classes.\\ 
+\indent For example, consider timeslot 1, student 2:\\
+\[t_{13}+t_{14}+t_{15}+x_{23} +x_{24} +x_{25}\]
+Student 2 can be enrolled in classes 2, 3 and 4 as long as either only one of those classes are scheduled for timeslot 1, or none of them are. The issue arises when the total is above 4, meaning there is a time conflict.\\\\
+\indent Let:
+\[S_3 = \text{the set of all 3-size combinations of classes}\]
+\[c \in S_3, c = \left\{ {j_1, j_2, j_3}\right\}\]
+
+\[\forall t \in \left\{ {1,2,...,s}\right\},\forall c \in S_3, \forall i \in \left\{ {1,2,...,m}\right\} \sum_{b}^{3}z_{tj_b}+x_{ij_b} < 4\]
+\\Because this creates 455 constraints for each student, in each timeslot, it adds a lot of time complexity. This method creates 54,600 constraints to the problem.
+\subsubsection{Instructor time conflicts}
+A similar method is used to prevent time conflicts for instructors. This adds 11,375 constraints.
+\[\forall t \in \left\{ {1,2,...,s}\right\},\forall c \in S_3, \forall h \in \left\{ {1,2,...,l}\right\} \sum_{b}^{3}z_{tj_b}+y_{ij_b} < 4\]
+
 \indent In the end this amounts to a very large number of constraints, and it still takes quite a while to find the optimal solution. Thankfully, given the nature of our problem it is not actually necessary to find the optimal solution, since the preference function we take as our objective function is essentially just a proxy for subjective and approximate measures of student and teacher preference. Therefore our model allows users to vary how long they want to let the linear program solver run, rather than waiting for the solver to run to completion. In a matter of minutes the user can compute a solution which is very good albeit mathematically suboptimal, but which will be optimal or close to optimal from the practical standpoint of students and schedulers.\\
 \indent To substantiate this claim we ran our model for just one minute using the preference data from 2015, and arrived at a schedule which was nearly identical to the actual schedule chosen by the MathILy instructors. The few discrepancies are most likely due to the overrides for 2015, which we do not have access to.\\
 \indent It should be noted that if the user does want to compute the mathematically optimal schedule, this can be done in a matter of hours for small to medium groups of students.  That is enough time to be inconvenient, but it is still an improvement over finding a matching of a graph or hyper-graph by hand.
