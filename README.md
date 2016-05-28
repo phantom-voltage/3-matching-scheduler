@@ -3,6 +3,17 @@
 
 ###To Do:
 
+* Peer Review Changes
+ * Explain why three simultaneous classes were chosen (in detail)
+ * Explain the example of 3.6 (Davis)
+ * Explain edge case of teacher assignment
+ * Dr. Ostroff introduction
+ * Explain 3-matching
+ * Explain the variables used in end of 3.1 (page 3)
+ * Reorganize / reimplement simplifications section
+ * Clean up references section, put in Acknowledgements
+  * Mention in beginning of paper how our problem is different, more complex, and faster than 2015
+ * Other notes from Peer Review (Ethan's in particular)
 * Explain why certain solving methods for GLPK work better than others.
  * Branching Pseudo-Cost Heuristic
  * Backtracking by best prediction heuristic
