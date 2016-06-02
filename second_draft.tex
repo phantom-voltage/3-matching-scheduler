@@ -12,6 +12,7 @@
 \usepackage[table]{xcolor}
 \usepackage{xcolor,colortbl}
 \usepackage[section]{placeins}
+\usepackage{graphicx}
 
 
 
@@ -127,6 +128,8 @@ We found the following essential to produce the fastest results:
 	\item Cuts by mixed integer rounding
 \end{itemize}
 \section{Results}
+
+
 We were able to find a viable solution to this problem using Linear Programming in approximately 7 minutes. Overall this is a much better time frame than the previous time frame used by our community partner which was reported as a 2 hour process. It is to be noted that while the initial solution found by this Linear Program is not the most optimal, it does satisfy all of the given constraints. By letting the program run for longer period of time, the assurance of a well formulated solution goes up. The schedule found for the data set after running the algorithm for three hours is discussed further below.\\
 	\subsection{Teacher Assignments by Eligibility}
 Table \ref{table:elig} on page \pageref{table:elig} refers to the data generated for the sample data in 2016. For a total of five teachers, each had an eligibility score to teach the classes. It was assumed that there was an even distribution of classes each teacher could instruct. Note that when a cell is colored green it corresponds to that teacher being scheduled to teach that class, as shown in \ref{table:teacher_assign} on page \pageref{table:teacher_assign}, red refers to classes a teacher could teach, but was not scheduled for. It's important to note, that no teacher was assigned a class he or she could not teach, i.e., no cell with the entry of 0 is colored green. This satisfies the hard constraint of each class being instructed by an eligible teacher. 
@@ -346,16 +349,18 @@ The exponential growth of time needed to find the optimal solution for this Line
 \section{Conclusions}
 This project directly connected to the material learned in class, regarding the subject of Linear Programming. While more complex than those covered in the homework, the basic knowledge provided in class proved instrumental in guiding our decision making process. Originally we tried to formulate a solution using graph theory, finding matchings between a tripartite graph so find a possible solution. Upon further consideration however, we determined that th novelty provided by this approach was outweighed by the scalability and customization provided by Linear Programming. When researching similar problems many published papers advocated for the use of Linear Programming over graphical methods.
 
+\section{Appendix}
+
 \section{Acknowledgments}
 First off we would like to thank Professor Sara Billey for being understanding when our previous two projects did not end up working out. The stumbles suffered throughout the quarter made progress difficult and uncertain, but Professor Billey was very accommodating and made sure that we kept moving forward. We would also like to thank Dr. Jonah Ostroff for providing this interesting problem for us so late in the quarter. While not as ambitious as our previous two problems, this scheduling problem seems genuinely useful while also providing value for future weeks of chaos to improve student and teacher experiences.
 
 \section{References}
 Chan, Yuk Hei. "On Linear Programming Relaxations of Hypergraph Matching." 18 Oct. 2009. Web. <On Linear Programming Relaxations of Hypergraph Matching>.
 
-Gunawan, Aldy, Kien Ming Ng, and Kim Leng Poh. "Solving the Teacher Assignment-Course Scheduling Problem by a Hybrid Algorithm." 07 Jan. 2014. Web. <http://www.waset.org/publications/11119>.
+Gunawan, Aldy, Kien Ming Ng, and Kim Leng Poh. "Solving the Teacher Assignment-Course Scheduling Problem by a Hybrid Algorithm." 07 Jan. 2014. Web. \url{<http://www.waset.org/publications/11119>}.
 
-Gunawan, Aldy, and Kien Ming Ng. "A Genetic Algorithm for the Teacher Assignment Problem for a University in Indonesia." 01 Mar. 2008. Web. <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.548.6394&rep=rep1&type=pdf>.
+Gunawan, Aldy, and Kien Ming Ng. "A Genetic Algorithm for the Teacher Assignment Problem for a University in Indonesia." 01 Mar. 2008. Web. \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.548.6394&rep=rep1&type=pdf}.
 
-Gunawan, Aldy. "Solving the Teacher Assignment Problem by Two Metaheuristics." 01 Jan. 2011. Web. <https://www.researchgate.net/profile/Aldy_Gunawan/publication/228579574_Solving_the_Teacher_Assignment_Problem_by_Two_Metaheuristics/links/02e7e52a1208bd3e39000000.pdf>.
+Gunawan, Aldy. "Solving the Teacher Assignment Problem by Two Metaheuristics." 01 Jan. 2011. Web. \url{https://www.researchgate.net/profile/Aldy_Gunawan/publication/228579574_Solving_the_Teacher_Assignment_Problem_by_Two_Metaheuristics/links/02e7e52a1208bd3e39000000.pdf}.
 
 \end{document}
