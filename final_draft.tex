@@ -69,7 +69,7 @@ sensitive=true}
 
 \maketitle
 \section{Abstract}
-MathILy-Er is an academic mathematics summer program in Oregon. Every summer in between regularly scheduled classes is an impromptu week-long set of classes decided by student interests. MathILy-Er needs a way to quickly create an assignment of students and teachers to classes, and classes to timeslots, so that are no scheduling conflicts. The organizer of this event, and our community partner, is Dr. Jonah Ostroff at the University of Washington.
+MathILy-Er is an academic mathematics summer program in Oregon. Every summer in between regularly scheduled classes is an impromptu week-long set of classes decided by student interests. MathILy-Er needs a way to quickly create an assignment of students and teachers to classes, and classes to time slots, so that are no scheduling conflicts. The organizer of this event, and our community partner, is Dr. Jonah Ostroff at the University of Washington.
 \section{Problem description}
 MathILy-Er is an academic Summer program for high school students.  In the middle of regularly scheduled classes, there is the Week of Chaos.  During the Week of Chaos a number of week-long classes are taught during some number of time slots (typically five). Each student is scheduled for a class during each of the time slots, and teachers are scheduled to instruct these classes.  Before the Week of Chaos, students are asked to fill out a survey where they rate their levels of interest in the various classes on a scale of 0-3. The possible teachers for each class is also taken into account.\\
 \indent The program's staff must then create a Week of Chaos schedule based on student preferences and teacher eligibility. Our goal for this project is to create a method to schedule based on an artificial set of student and teacher preferences which maximizes that satisfaction of student preferences, such that students are never scheduled for the multiple classes during a given time slot, every student is assigned to a class during each time slot, and the teaching load is evenly distributed between the teachers.
@@ -85,15 +85,15 @@ At root, the problem is to find an optimal 3-matching. Unfortunately, finding a 
 \[i \in \left\{ {1,2,...,m}\right\}\text{, where 
 }m \text{ is the number of students}\]
 \[j \in \left\{{1,2,...,n}\right\} \text{where } n \text{ is the number of classes} \]
-\[t \in \left\{{1,2,...,s}\right\} \text{where } s \text{ is the number of timeslots} \]
+\[t \in \left\{{1,2,...,s}\right\} \text{where } s \text{ is the number of time slots} \]
 \[x_{ij} = 1 \text{ if student } i \text{ is assigned to class }j \text{, 0 otherwise}\]
 \[y_{hj} = 1 \text{ if instructor } h  \text{ is assigned to class }j \text{, 0 otherwise}\]
-\[z_{tj} = 1 \text{ if class } j  \text{ is assigned to timeslot }t \text{, 0 otherwise}\]\\
+\[z_{tj} = 1 \text{ if class } j  \text{ is assigned to time slot }t \text{, 0 otherwise}\]\\
 We also incorporate the student preference matrix $P$ and instructor eligibility matrix $E$ in calculations as we seek to maximize their preferences and eligibility.
 \[P =(p_{ij}) \text{, where } p_{ij} \text{ represents preference rating of student } i \text{ for class }j\]
 \[E =(e_{hj}) \text{, where } e_{hj} \text{ represents eligibility rating of instructor } h \text{ for class }j\]
 \[F =(f_{ij}) \text{, where } f_{ij} = 1 \text{ if student} i \text{ is forced to take for class }j \text{, 0 otherwise}\]
-For the sample problem of 2016, with 5 instructors, 24 students, 15 classes, and 5 timeslotes we let:
+For the sample problem of 2016, with 5 instructors, 24 students, 15 classes, and 5 times lots we let:
 \[l = 5, m = 24, n = 15, s = 5\]\\
 \indent Our objective function is the sum of student ratings for their assigned classes plus the sum of teacher ratings for the classes they are assigned to teach.\\
 \[\text{max} \sum_{i=1}^{m} \sum_{j=1}^{n}x_{ij}p_{ij} + \sum_{h=1}^{l}\sum_{j=1}^{n}y_{ij}e_{ij}\]
@@ -120,41 +120,40 @@ An interesting aspect of our problem is that, even though the goal is to make a 
 \[ \text{if } f_{ij} = 1, \text{ then } x_{ij} = 1\]
 \[ \text{if } f_{ij} = -1, \text{ then } x_{ij} = 0\]
 \subsection{Time constraints}
-Each day there is a fixed number of time slots during which classes can be scheduled. In our artificial data set we set this number of time slots to 5. Clearly we cannot schedule teachers to teach multiple classes during a single time-slot or schedule students to take multiple classes during a single slot. We formulated these constraints in the obvious way: the sum of classes assigned to each teacher during each time-slot must be less than or equal to 1, and for students this sum must be equal to one, since the students must take exactly one class during every time slot.\\
-\subsubsection{Number of classes per timeslot}
-This depends on the scheduling decided ahead of time by the program's organizers. With 15 classes and 5 timeslots, we create a constraint such that only 3 classes can occupy any given timeslot.
+Each day there is a fixed number of time slots during which classes can be scheduled. In our artificial data set we set this number of time slots to 5. Clearly we cannot schedule teachers to teach multiple classes during a single time slot or schedule students to take multiple classes during a single slot. Because of the number of ways time conflicts can arise, eliminating them must be broken up into a number of constraints.\\
+\subsubsection{Number of classes per time slot}
+This depends on the scheduling decided ahead of time by the program's organizers. With 15 classes and 5 time slots, we create a constraint such that only 3 classes can occupy any given time slot.
 \[\forall t \in \left\{ {1,2,...,s}\right\}, \sum_{j=1}^{n}z_{tj} = 3\]
-\subsubsection{Each class is assigned to only one timeslot}
+\subsubsection{Each class is assigned to only one time slot}
 Each class should only occur once in the schedule. This ensures that the algorithm does not disregard the time conflicts.
 \[\forall j \in \left\{ {1,2,...,n}\right\}, \sum_{t=1}^{s}z_{tj} = 1\]
 \subsection{Student time conflicts}
-To prevent students being assigned to classes that occur in the same timeslot, we must add a large number of constraints per student. For any given selection of three classes (there are $\binom {15}{3} = 455$) the total of the binary variables representing timeslots and student enrollment must be less than 1 plus the number of simultaneous classes.\\ 
-\indent For example, consider timeslot 1, student 2:\\
-\[t_{13}+t_{14}+t_{15}+x_{23} +x_{24} +x_{25} \leq 4 \]
-Student 2 can be enrolled in classes 2, 3 and 4 as long as either only one of those classes are scheduled for timeslot 1, or none of them are. The issue arises when the total is above 4, meaning there is a time conflict. This same inequality is added as a constraint for every three classes, for every timeslot, and for every student.\\\\
+To prevent students being assigned to classes that occur in the same time slot, we must add a large number of constraints per student. For any given selection of three classes (there are $\binom {15}{3} = 455$) the total of the binary variables representing time slots and student enrollment must be less than 1 plus the number of simultaneous classes.\\ 
+\indent For example, consider time slot 1, student 2, with the selection of three classes 3,4 and 5:\\
+\[t_{13}+t_{14}+t_{15}+x_{23} +x_{24} +x_{25} < 4 \]
+Student 2 can be enrolled in classes 2, 3 and 4 as long as either only one of those classes are scheduled for time slot 1, or none of them are. Conversely, two or three of the classes could be in the time slot, but the student could only be enrolled in at most one class. The issue arises when the total is above 4, meaning there is a time conflict. This same inequality is added as a constraint for every three classes, for every time slot, and for every student.\\\\
 \indent Let:
 \[S_3 = \text{the set of all 3-size combinations of classes}\]
 \[c \in S_3, c = \left\{ {j_1, j_2, j_3}\right\}\]
 
 \[\forall t \in \left\{ {1,2,...,s}\right\},\forall c \in S_3, \forall i \in \left\{ {1,2,...,m}\right\} \sum_{b}^{3}z_{tj_b}+x_{ij_b} < 4\]
-\\Because this creates 455 constraints for each student, in each timeslot, it adds a lot of time complexity. This method creates 54,600 constraints to the problem.
+\\Because this creates 455 constraints for each student, in each time slot, it adds a lot of time complexity. This method creates 54,600 constraints to the problem.
 \subsubsection{Instructor time conflicts}
 A similar method is used to prevent time conflicts for instructors. This adds 11,375 constraints.
 \[\forall t \in \left\{ {1,2,...,s}\right\},\forall c \in S_3, \forall h \in \left\{ {1,2,...,l}\right\} \sum_{b}^{3}z_{tj_b}+y_{ij_b} < 4\]
-
-\indent In the end this amounts to a very large number of constraints, and it still takes quite a while to find the optimal solution. Thankfully, given the nature of our problem it is not actually necessary to find the optimal solution, since the preference function we take as our objective function is essentially just a proxy for subjective and approximate measures of student and teacher preference. Therefore our model allows users to vary how long they want to let the linear program solver run, rather than waiting for the solver to run to completion. In a matter of minutes the user can compute a solution which is very good albeit mathematically suboptimal, but which will be optimal or close to optimal from the practical standpoint of students and schedulers.\\
-\indent To substantiate this claim we ran our model for just one minute using the preference data from 2015, and arrived at a schedule which was nearly identical to the actual schedule chosen by the MathILy-Er instructors. The few discrepancies are most likely due to the overrides for 2015, which we do not have access to.\\
-\indent It should be noted that if the user does want to compute the mathematically optimal schedule, this can be done in a matter of hours for small to medium groups of students.  That is enough time to be inconvenient, but it is still an improvement over finding a matching of a graph or hyper-graph by hand.
+\subsection{Summary}
+\indent In the end this amounts to a very large number of constraints. This means exhausting all possible schedules is very time consuming, but with proper methods a working schedule can still be found. Thankfully, given the nature of our problem it is not actually necessary to find the optimal solution, since the preference function we take as our objective function is essentially just a proxy for subjective and approximate measures of student and teacher preference. Therefore our model allows users to vary how long they want to let the linear program solver run, rather than waiting for the solver to run to completion. In a matter of minutes the user can compute a solution which is very good albeit mathematically suboptimal, but which will be optimal or close to optimal from the practical standpoint of students and schedulers.\\
+\indent To substantiate this claim we ran our model for just one minute using the preference data from 2015, and arrived at a similar schedule to the schedule chosen by the MathILy-Er instructors. The few discrepancies were due to the overrides for 2015, which we did not have access to.
 
 \section{Simplification}
-While this problem does not require a significant number of simplifications, some assumptions must be made about the data in order to satisfy our solutions. One simplification is that we must assume is that the preferences of teachers are evenly distributed over the total collection of classes to be taught. We also determined a maximum class size of 8 students, and minimum class size of 5 students, based on last years data. Additionally, our method doesn't determine if two or more teachers instruct a class, as was found in 2015. Our initial tests are also based on a small number of randomly generated student and teacher preferences. Thus, another simplification, is that computation times are based on these artificial ratings. \\
+While this problem does not require a significant number of simplifications, some assumptions must be made about the data in order to satisfy our solutions. One simplification is that we must assume is that the eligibility of teachers are evenly distributed over the total collection of classes to be taught. We also determined a maximum class size of 8 students, and minimum class size of 5 students, based on last years data. Additionally, our method doesn't determine if two or more teachers instruct a class, as was found in 2015. Our initial tests are also based on  randomly generated student and teacher ratings. Thus, another simplification, is that computation times are based on these artificial ratings. \\
 
 
 \section{Mathematical Solution}
 \indent Depending on the size of the data set, finding the absolute maximum student and teacher preference in the assignment of classes could take days. In our tests using randomized student preferences, teacher eligibility, and overrides we found that the largest total preference was found in 10 minutes. Letting the algorithm run longer, we found no improvement after this time.  Given our tests, we recommend setting a time limit of one hour to find a suitable schedule.\\
 \indent The integrality gap is the ratio between the relaxed LP optimal solution and the IP solution. Something interesting to note is that the optimal solution of the IP without any time constraints, is the same value of the optimal LP solution. That means whatever the integrality gap is, it represents the ratio of satisfaction given the ideal schedule where every student receives his most preferred class.\\
 \indent We created many artificial datasets, but worked with one in particular to perform more testing on. The data generated for teacher eligibility, overrides, and student preferences are found in tables \ref{table:elig}, \ref{table:override}, and \ref{table:pref} respectively. Teacher eligibility was created under the guidance that of the available classes, the staff have an idea of who will teach that class. Occasional backup teachers were generated, with lower eligibility scores. Overrides were generated with the assumption that a lower rated class is often misunderstood by students, and those classes were chosen for overrides. Student preferences were created with the restriction that no rating could be given out more than 5 times.\\
-\indent In this data set, we found that within 10 minutes, the algorithm arrived at a schedule with an IP solution with an integrality gap of 2.2\%. That is, within 2.2\% of a schedule where time conflicts are not considered. Allowing our algorithm to run for ten hours did not improve the solution, but narrowed the integrality gap to 2\%, by finding a new upperbound of the solution.\\
+\indent In this data set, we found that within 10 minutes, the algorithm arrived at a schedule with an IP solution with an integrality gap of 2.2\%. That is, it's within 2.2\% of a schedule where time conflicts are not considered. Allowing our algorithm to run for ten hours did not improve the solution, but narrowed the integrality gap to 2\%, by finding a new upperbound of the solution.\\
 \indent We chose GLPK to solve the integer programming problem, not only for its lack of restrictions in public or commercial applications, but for its flexibility in setting solver parameters. Different optimization parameters were tested using the same artificial dataset for their speed in producing feasible solutions.\\\\
 We found the following essential to produce the largest total preference with the fastest results:
 \begin{itemize}
@@ -168,9 +167,9 @@ We were able to find a viable solution to this problem using integer programming
 	\subsection{Teacher Assignments by Eligibility}
 Table \ref{table:elig} refers to the data generated for the sample data in 2016. For a total of five teachers, each had an eligibility score to teach the classes. It was assumed that there was an even distribution of classes each teacher could instruct. Note that when a cell is colored green it corresponds to that teacher being scheduled to teach that class. It's important to note, that not only was no teacher assigned to aclass he or she could not teach, but the most eligible teacher was assigned in all cases. This satisfies the constraint of each class being instructed by an eligible teacher.\\
 \FloatBarrier
-
 \begin{table}[h]
-\hspace*{-1cm}
+\vspace*{-.5cm}
+\scriptsize
 \begin{tabular}{|a|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
  \rowcolor{gray!50}
 Class & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8
@@ -303,13 +302,13 @@ Student X & $0$ & $2$ & \cellcolor{green!45}$2$ & \cellcolor{green!45}$3$ & $2$ 
 \end{center}
 
 \FloatBarrier
-\subsection{Timeslots}
-Organizing the data by classes, with their respective teachers and students is the end result that Dr. Ostroff and the MathILy-Er staff would need for "the Week of Chaos." This is shown in table \ref{table:ass}. Note that in each timeslot, a student is only assigned to one class, and likewise with teachers. This satisfies the constraint of scheduling.\\
+\subsection{Time slots}
+Organizing the data by classes, with their respective teachers and students is the end result that Dr. Ostroff and the MathILy-Er staff would need for "the Week of Chaos." This is shown in table \ref{table:ass}. Note that in each time slot, a student is only assigned to one class, and likewise with teachers. This satisfies the constraint of scheduling.\\
 \begin{table}[h]
 \hspace*{1.5cm}
 \begin{tabular}{|l|l|l|l|} \hline
 \rowcolor{gray!45}
-Class & Timeslot & Teacher & Students \\ \hline \hline
+Class & Time slot & Teacher & Students \\ \hline \hline
 1 & 1 & b & A,C,E,J,L,P,S,T \\ \hline
 7 & 1 & c & B,F,G,I,M,U,V,W \\ \hline
 15 & 1 & d & D,H,K,N,O,Q,R,X \\ \hline
@@ -332,7 +331,7 @@ Class & Timeslot & Teacher & Students \\ \hline \hline
 3 & 5 & a & A,I,L,N,P,R,T,X \\ \hline
 5 & 5 & e & B,C,E,H,K,M,Q,S \\ \hline
 \end{tabular}
-\caption{Class assignments, organized by timeslot}
+\caption{Class assignments, organized by time slot}
 \label{table:ass}
 \end{table}
 \FloatBarrier
@@ -375,16 +374,18 @@ X & $1.6$ & $3.0$ & $1.4$ \\ \hline
 \end{table}
 
 \section{Improvements}
-The exponential growth of time needed to find the optimal solution for this Linear Program is something that cannot be avoided. With an NP-Complete problem and the structure of LPs, we can only hope to improve the time required to find a viable solution. By determining a proper heuristic to prioritize possibly viable solutions would improve the run time of finding a solution within a certain time-frame. Another possible source of improvement would be a custom preference scale. Our current preferences were pre-determined by our community partner, however, if we were given adequate time we might be able to produce a preference scale which would lead to either more accurate or quicker run times when it comes to discovered solutions.\\
+The exponential growth of time needed to find the optimal solution for this Linear Program is something that cannot be avoided. With an NP-Complete problem and the structure of LPs, we can only hope to improve the time required to find a viable solution. By determining a proper heuristic to prioritize possibly viable solutions would improve the run time of finding a solution within a certain time-frame.\\
 \indent Additional improvements need to be made to meet some of the additional, soft constraints of the community partner. For instance, our community partner mentioned incorporating gender ratios to the class schedules which our solution does not currently address.\\
 \indent Another beneficial option would be to place teachers with as many unique students as possible, preferably so that each student and teacher is paired in at least one class. The ability to turn these additional constraints on or off would allow our program to explore several possible solutions for our community partner with relatively little effort on their part.\\
 \indent Finally any other optimization that could be made to our LP structure might be beneficial. If we could combine constraints that produce the same results or in some other way reduce our total number of constraints, we could speed up our program to make it more convenient when testing several data sets.
 
 \section{Conclusions}
-This project directly connected to the material learned in class, regarding the subject of Linear Programming. While more complex than those covered in the homework, the basic knowledge provided in class proved instrumental in guiding our decision making process. Originally we tried to formulate a solution using graph theory, finding matchings between a tripartite graph so find a possible solution. Upon further consideration however, we determined that the novelty provided by this approach was outweighed by the scalability and customization provided by Linear Programming. When researching similar problems many published papers advocated for the use of Linear Programming over graphical methods.
+This project directly connected to the material learned in class, regarding the subject of linear programming. While more complex than those covered in the class assignments, the basic knowledge provided in class proved instrumental in guiding our decision making process. Originally we tried to formulate a solution using graph theory, finding matchings between a tripartite graph so find a possible solution. Upon further consideration however, we determined that the novelty provided by this approach was outweighed by the scalability and customization provided by linear programming. When researching similar problems many published papers advocated for the use of linear programming over graphical methods.
 
 \section{Verification}
-Dr. Ostroff reported that he will be using our IP method in the upcoming session of MathILy-Er.
+
+Dr. Ostroff reported that he will be using our IP method in the upcoming session of MathILy-Er. He writes, "the work absolutely meets my expectations, and I’ll likely use your code this summer when scheduling the Week of Chaos."
+
 
 \section{Appendix}
 All of our code was done using SageMath. We are releasing the code for free use and modification under the GPL.
@@ -462,16 +463,16 @@ These variables are used in both the random generation and creation of the sched
             if override[i,j] == -1:
                 p.add_constraint(s[i,j] == 0)
                 
-    #Add new variable to track classes in timeslots
-    #Rows indicate timeslots, columns indicate classes
-    #1 if class is in that timeslot, 0 otherwise            
+    #Add new variable to track classes in time slots
+    #Rows indicate time slots, columns indicate classes
+    #1 if class is in that time slot, 0 otherwise            
     t = p.new_variable(binary=True)
     
-    #Set the number of classes per timeslot
+    #Set the number of classes per time slot
     for k in range(timeSlotNum):
         p.add_constraint( sum(t[k,j] for j in range(classNum)) == simClasses)
     
-    #Set the number of timeslots per class    
+    #Set the number of time slots per class    
     for j in range(classNum):
         p.add_constraint( sum( t[k,j] for k in range(timeSlotNum)) == 1)
     
@@ -480,7 +481,7 @@ These variables are used in both the random generation and creation of the sched
     w = Combinations(mset,simClasses)
     
     #Add constraints to prevent students being assigned to multiple classes
-    #in the same timeslot
+    #in the same time slot
     for k in range(timeSlotNum):
         for l in w:
             for i in range(studNum):
@@ -657,7 +658,7 @@ These variables are used in both the random generation and creation of the sched
 
 
 \section{Acknowledgments}
-First off we would like to thank Professor Sara Billey for being understanding when our previous two projects did not end up working out. The stumbles suffered throughout the quarter made progress difficult and uncertain, but Professor Billey was very accommodating and made sure that we kept moving forward. We would also like to thank Dr. Jonah Ostroff for providing this interesting problem. 
+We would like to thank Professor Sara Billey for her excellent work in instructing our class and guiding us in the selection of the project. The stumbles suffered throughout the selection of a project made progress difficult and uncertain, but Professor Billey was very accommodating and made sure that we kept moving forward. We would also like to thank Dr. Jonah Ostroff for providing this interesting and very approachable problem. 
 
 \section{References}
 Chan, Yuk Hei. "On Linear Programming Relaxations of Hypergraph Matching." 18 Oct. 2009. Web.
