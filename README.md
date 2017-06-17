@@ -1,5 +1,8 @@
-## math_480_project
-### Chaos Week Scheduling
+## Chaos Week Scheduling
+
+### Introduction
+
+This project was part of the University of Washington's Math 480 Special Topics class with Professor Sarah Billey. The project involved working with community partners to solve problems with mathematical modeling. We worked with Dr. Jonah Ostroff at the University of Washington to help automate scheduling students to classes, teachers to classes, and classes to timeslots, all while avoiding time conflicts.
 
 ### To Do:
 
