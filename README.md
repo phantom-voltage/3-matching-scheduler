@@ -15,7 +15,7 @@ Because there is no data yet for student preferences of 2016, we used randomized
 
 ### Sample Results
 
-#### Teach Assignment
+#### Teacher Assignment
 For a total of five teachers, each had an eligibility score to teach the classes. It was assumed that there was an even distribution of classes each teacher could instruct. Note that when a cell is colored green it corresponds to that teacher being scheduled to teach that class. It's important to note, that not only was no teacher assigned to aclass he or she could not teach, but the most eligible teacher was assigned in all cases. This satisfies the constraint of each class being instructed by an eligible teacher.
 
 ![Table 1](/images/table1.png)
@@ -23,8 +23,25 @@ For a total of five teachers, each had an eligibility score to teach the classes
 
 #### Student Assignment
 
-#### Time Slots
+![Table 2](/images/table2.png)
 
+![Table 3](/images/table3.png)
+
+This table shows class assignment among the preference ratings for the given classes. Note that this is in accordance to the overrides shown above. The classes students were assigned are predominantly their highest rated classes.
+
+
+#### Time Slots
+Organizing the data by classes, with their respective teachers and students is the end result that Dr. Ostroff and the MathILy-Er staff would need for "the Week of Chaos." Note that in each time slot, a student is only assigned to one class, and likewise with teachers. This satisfies the constraint of scheduling.
+
+![Table 4](/images/table4.png)
+
+#### Student Satisfaction
+
+To verify that students were assigned classes that they rated the highest, the average rating of their preferences was compared to the preference of their assigned classes. The difference from their average rating and actual assignment shows that no student was unfairly penalized in the assignment. Student A has the lowest preference of assigned classes due to abundant overrides given.
+
+Another test was computed to compare the assignment. Using the same set of data, the IP was solved with a modified objective function. Instead, only teacher eligibility was maximized. The total of net satisfaction in this case was -1.466 compared to the original 23.332.
+
+![Table 5](/images/table5.png)
 
 
 ### To Do:
