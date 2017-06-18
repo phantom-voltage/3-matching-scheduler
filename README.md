@@ -6,7 +6,7 @@ This project was part of the University of Washington's Math 480 Special Topics 
 
 Below are snippets pulled from our report. Please read the document to see the formulas we used to design the LP.
 
-We created the scheduler in Sage. You can test out the scheduler with the sage worksheet. This is found in the general_form_scheduler.sws.
+We created the scheduler in Sage. You can test out the scheduler with the sage worksheet. This is found in general_form_scheduler.sws.
 
 
 ### Abstract
