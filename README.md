@@ -4,6 +4,10 @@
 
 This project was part of the University of Washington's Math 480 Special Topics class with Professor Sarah Billey. The project involved working with community partners to solve problems with mathematical modeling. We worked with Dr. Jonah Ostroff at the University of Washington to help automate scheduling for his Summer mathematics program.
 
+Below are snippets pulled from our report. Please read the document to see the formulas we used to design the LP.
+
+We created the scheduler in Sage. You can test out the scheduler with the sage worksheet. This is found in the general_form_scheduler.sws.
+
 
 ### Abstract
 MathILy-Er is an academic mathematics summer program in Oregon. Every summer in between regularly scheduled classes is an impromptu week-long set of classes decided by student interests. MathILy-Er needs a way to quickly create an assignment of students and teachers to classes, and classes to time slots, so that are no scheduling conflicts. The organizer of this event, and our community partner, is Dr. Jonah Ostroff at the University of Washington.
